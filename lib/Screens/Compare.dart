@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:life_tracker/Backend/DataBaseLogic.dart';
-import '../Constants.dart';
 import '../Widgets/CustomScaffold.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../Widgets/GraphCard.dart';
+import '../Utils/GraphBuilder.dart';
 
 class Compare extends StatefulWidget {
   @override
@@ -11,17 +13,33 @@ class Compare extends StatefulWidget {
 
 class _CompareState extends State<Compare> {
   var allStats;
-  List<dynamic> allTags;
+  List<dynamic> compareTags;
+  var menuItems;
+  var selectedItem;
+
+  List<LineSeries<GraphData, DateTime>> sources = [];
+
+  void addGraphData(tag) => sources.add(LineSeries<GraphData, DateTime>(
+        animationDuration: 1000,
+        // Bind data source
+        dataSource: getGraphDataForTag(allStats, tag),
+        markerSettings: MarkerSettings(isVisible: true),
+        width: 2,
+        name: tag,
+        xValueMapper: (GraphData graphData, _) => graphData.date,
+        yValueMapper: (GraphData graphData, _) => graphData.value,
+      ));
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allTags = context.read<DataBaseLogic>().allTags;
+    compareTags = context.read<DataBaseLogic>().allTags;
     allStats = context.read<DataBaseLogic>().allStats;
+    menuItems = getDropdownMenuItems();
   }
 
-  List<DropdownMenuItem<dynamic>> getDropdownMenuItems() => allTags
+  List<DropdownMenuItem<dynamic>> getDropdownMenuItems() => compareTags
       .map(
         (tag) => DropdownMenuItem(
           value: tag,
@@ -32,20 +50,20 @@ class _CompareState extends State<Compare> {
 
   @override
   Widget build(BuildContext context) {
-    var menuItems = getDropdownMenuItems();
-    var startingItem = menuItems[0].value;
     return CustomScaffold(
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton(
-                  value: startingItem,
+                  value: selectedItem,
                   onChanged: (item) {
                     setState(() {
-                      startingItem = item;
+                      addGraphData(item);
+                      selectedItem = item;
                     });
                   },
                   items: menuItems,
@@ -53,6 +71,10 @@ class _CompareState extends State<Compare> {
               ),
             ],
           ),
+          Expanded(
+              child: GraphCard(
+            data: sources,
+          ))
         ],
       ),
     );

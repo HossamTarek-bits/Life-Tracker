@@ -7,13 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:life_tracker/Backend/DataBaseLogic.dart';
 
 import 'package:life_tracker/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    DataBaseLogic db = DataBaseLogic();
+    await db.initialize();
+    await tester.pumpWidget(MyApp(db));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

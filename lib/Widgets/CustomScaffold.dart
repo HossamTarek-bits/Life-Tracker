@@ -8,18 +8,23 @@ class CustomScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            kShadowColor,
-            kBackgroundColor,
-          ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-        ),
+        color: kBackgroundColor,
+        // gradient: LinearGradient(
+        //   colors: [
+        //     kBackgroundColor,
+        //   ],
+        //   begin: Alignment.bottomCenter,
+        //   end: Alignment.topCenter,
+        // ),
       ),
       child: Scaffold(
-        appBar: AppBar(),
-        drawer: Drawer(
+        appBar: AppBar(
+          title: Text("Hi,Hossam"),
+          shadowColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.transparent,
+        ),
+        endDrawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [

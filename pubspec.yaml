@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -29,17 +29,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
   blobs: ^1.2.0
-  fl_chart: ^0.12.2
-  flutter_snake_navigationbar: ^0.4.4
-  buttons_tabbar: ^1.1.1
   moor: # use the latest version
   sqlite3_flutter_libs: # Also use the latest version.
   path_provider:
   path:
   provider: ^4.3.3
   syncfusion_flutter_charts: ^18.4.42
-  carousel_slider: ^3.0.0
-  flutter_animated_button: ^1.0.2
+  modal_bottom_sheet: ^1.0.0+1
+
+
 
 
 
